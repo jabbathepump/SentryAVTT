@@ -1,0 +1,212 @@
+<UserControl x:Class="SentryAVTT.UI.Pages.AboutPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer Padding="28 20"
+                  Background="Transparent"
+                  VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <StackPanel>
+            <Border Background="{StaticResource CardBrush}"
+                    CornerRadius="16"
+                    Padding="32"
+                    Margin="0 0 0 24"
+                    BorderThickness="1"
+                    BorderBrush="{StaticResource BorderBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Width="72"
+                            Height="72"
+                            CornerRadius="36"
+                            Margin="0 0 24 0"
+                            Background="{StaticResource AccentBrush}"
+                            Opacity="0.12" />
+
+                    <Border Grid.Column="0"
+                            Width="72"
+                            Height="72"
+                            CornerRadius="36"
+                            Margin="0 0 24 0"
+                            Background="Transparent">
+                        <TextBlock Text="&#xE734;"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   FontSize="32"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="SentryAVTT"
+                                   FontSize="26"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource TextPrimaryBrush}" />
+                        <TextBlock Text="Real-time threat detection engine"
+                                   FontSize="13"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Margin="0 2 0 0" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <Grid Margin="0 0 0 24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0"
+                        Style="{StaticResource StatCard}"
+                        Margin="0 0 6 0">
+                    <StackPanel>
+                        <TextBlock Text="&#xE943;"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   FontSize="20"
+                                   Foreground="{StaticResource AccentBrush}"
+                                   Margin="0 0 0 8" />
+                        <TextBlock Style="{StaticResource CardTitle}" Text="Version" />
+                        <TextBlock x:Name="VersionText"
+                                   Style="{StaticResource CardValue}"
+                                   Text="0.1.0" />
+                        <TextBlock Style="{StaticResource CardSubtext}" Text="Core agent build" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="1"
+                        Style="{StaticResource StatCard}"
+                        Margin="6 0 0 0">
+                    <StackPanel>
+                        <TextBlock Text="&#xE946;"
+                                   FontFamily="Segoe MDL2 Assets"
+                                   FontSize="20"
+                                   Foreground="{StaticResource SuccessBrush}"
+                                   Margin="0 0 0 8" />
+                        <TextBlock Style="{StaticResource CardTitle}" Text="Signature DB" />
+                        <TextBlock x:Name="SignatureText"
+                                   Style="{StaticResource CardValue}"
+                                   Text="Unknown" />
+                        <TextBlock Style="{StaticResource CardSubtext}" Text="Threat definitions" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Background="{StaticResource CardBrush}"
+                    CornerRadius="12"
+                    Padding="24"
+                    Margin="0 0 0 24"
+                    BorderThickness="1"
+                    BorderBrush="{StaticResource BorderBrush}">
+                <StackPanel>
+                    <TextBlock Text="About"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Margin="0 0 0 16" />
+
+                    <Grid Margin="0 0 0 12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Text="Developer"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontSize="13" />
+                        <TextBlock Grid.Row="0" Grid.Column="1"
+                                   Text="casperdre0"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   FontSize="13"
+                                   FontWeight="SemiBold" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Text="Version"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+                        <TextBlock Grid.Row="1" Grid.Column="1"
+                                   x:Name="VersionDetailText"
+                                   Text="0.1.0"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Text="Framework"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+                        <TextBlock Grid.Row="2" Grid.Column="1"
+                                   Text=".NET 9.0 — Windows"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Text="OS"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+                        <TextBlock Grid.Row="3" Grid.Column="1"
+                                   x:Name="OsText"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+
+                        <TextBlock Grid.Row="4" Grid.Column="0"
+                                   Text="64-bit"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+                        <TextBlock Grid.Row="4" Grid.Column="1"
+                                   x:Name="ArchText"
+                                   Foreground="{StaticResource TextPrimaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+
+                        <TextBlock Grid.Row="5" Grid.Column="0"
+                                   Text="Core Status"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+                        <TextBlock Grid.Row="5" Grid.Column="1"
+                                   x:Name="CoreStatusText"
+                                   Text="Unknown"
+                                   Foreground="{StaticResource WarningBrush}"
+                                   FontSize="13"
+                                   Margin="0 8 0 0" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{StaticResource CardBrush}"
+                    CornerRadius="12"
+                    Padding="24"
+                    BorderThickness="1"
+                    BorderBrush="{StaticResource BorderBrush}">
+                <StackPanel>
+                    <TextBlock Text="Architecture"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Margin="0 0 0 16" />
+                    <TextBlock Text="Rust core agent with C# WPF UI, communicating over Named Pipes with protobuf framing. SQLite-backed threat database with real-time file watcher and process scanner."
+                               FontSize="13"
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               TextWrapping="Wrap"
+                               LineHeight="20" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

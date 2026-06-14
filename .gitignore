@@ -1,0 +1,38 @@
+# Rust
+/target/
+Cargo.lock
+**/*.rs.bk
+*.pdb
+
+# .NET
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.csproj.user
+.vscode/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.AppleDouble
+.LSOverride
+
+# Database
+*.db
+*.db-journal
+
+# Logs
+*.log
+
+# Project documentation
+README.md
+plan.md
+prompts.md
