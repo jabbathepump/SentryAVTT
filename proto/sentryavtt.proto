@@ -1,0 +1,185 @@
+syntax = "proto3";
+package sentryavtt;
+
+// ─── Top-level envelope ────────────────────────────────────────────────
+// Every message on the wire is a length-prefixed Envelope:
+//   [4 bytes LE payload length] [protobuf-encoded Envelope]
+
+enum MessageType {
+  MESSAGE_TYPE_UNSPECIFIED = 0;
+  REQUEST                  = 1;
+  RESPONSE                 = 2;
+  EVENT                    = 3;
+}
+
+message Envelope {
+  uint64      sequence     = 1;
+  uint64      timestamp_ms = 2;
+  MessageType type         = 3;
+
+  oneof payload {
+    // Requests (UI → Core)
+    ScanRequest           scan_req               = 10;
+    CancelScanRequest     cancel_scan_req        = 11;
+    GetStatusRequest      get_status_req         = 12;
+    PingRequest           ping_req               = 13;
+
+    // Quarantine requests
+    QuarantineListRequest  quarantine_list_req   = 14;
+    QuarantineRestoreRequest quarantine_restore_req = 15;
+    QuarantineDeleteRequest quarantine_delete_req = 16;
+
+    // Responses (Core → UI)
+    ScanResponse          scan_res               = 20;
+    CancelScanResponse    cancel_scan_res        = 21;
+    StatusResponse        status_res             = 22;
+    PongResponse          pong_res               = 23;
+
+    // Quarantine responses
+    QuarantineListResponse  quarantine_list_res  = 24;
+    QuarantineRestoreResponse quarantine_restore_res = 25;
+    QuarantineDeleteResponse quarantine_delete_res = 26;
+
+    // Events (Core → UI, unsolicited)
+    ThreatDetected        threat_detected        = 30;
+    ScanProgress          scan_progress          = 31;
+    CoreStatus            core_status            = 32;
+    ErrorMessage          error                  = 40;
+  }
+}
+
+// ─── Requests ──────────────────────────────────────────────────────────
+
+message GetStatusRequest {}
+
+message PingRequest {}
+
+message ScanRequest {
+  string target_path = 1;          // "" means full scan
+  bool   recursive   = 2;
+}
+
+message CancelScanRequest {
+  string scan_id = 1;
+}
+
+// ─── Responses ─────────────────────────────────────────────────────────
+
+message StatusResponse {
+  string version          = 1;
+  int32  active_scans     = 2;
+  uint64 files_scanned    = 3;
+  uint64 threats_blocked  = 4;
+  uint64 processes_watched = 5;
+  uint64 quarantine_count = 6;
+  bool   service_running  = 7;
+  string signature_age    = 8;
+}
+
+message PongResponse {
+  uint64 server_time_ms = 1;
+}
+
+message ScanResponse {
+  string    scan_id      = 1;
+  ScanState state        = 2;
+  uint32    files_queued = 3;
+}
+
+message CancelScanResponse {
+  string   scan_id = 1;
+  bool     ok      = 2;
+  string   message = 3;
+}
+
+enum ScanState {
+  SCAN_STATE_UNSPECIFIED = 0;
+  SCAN_QUEUED            = 1;
+  SCAN_RUNNING           = 2;
+  SCAN_COMPLETED         = 3;
+  SCAN_CANCELLED         = 4;
+  SCAN_ERROR             = 5;
+}
+
+// ─── Events ────────────────────────────────────────────────────────────
+
+message ScanProgress {
+  string scan_id        = 1;
+  uint32 files_scanned  = 2;
+  uint32 files_total    = 3;
+  uint32 threats_found  = 4;
+  string current_file   = 5;
+  double progress_pct   = 6;
+}
+
+message ThreatDetected {
+  string path        = 1;
+  string hash        = 2;
+  string threat_name = 3;
+  Severity severity  = 4;
+
+  enum Severity {
+    SEVERITY_UNSPECIFIED = 0;
+    LOW                  = 1;
+    MEDIUM               = 2;
+    HIGH                 = 3;
+    CRITICAL             = 4;
+  }
+}
+
+message CoreStatus {
+  enum State {
+    STATE_UNSPECIFIED = 0;
+    STARTING          = 1;
+    READY             = 2;
+    BUSY              = 3;
+    ERROR             = 4;
+    SHUTTING_DOWN     = 5;
+  }
+  State state   = 1;
+  string detail = 2;
+}
+
+message ErrorMessage {
+  string code    = 1;
+  string message = 2;
+}
+
+// ─── Quarantine ───────────────────────────────────────────────────────
+
+message QuarantineListRequest {}
+
+message QuarantineEntry {
+  string id               = 1;
+  string original_path    = 2;
+  string quarantined_path = 3;
+  string quarantined_at   = 4;
+  string hash             = 5;
+  string threat_name      = 6;
+  int32  severity         = 7;
+  string status           = 8;  // "quarantined", "restored", "deleted"
+}
+
+message QuarantineListResponse {
+  repeated QuarantineEntry entries = 1;
+}
+
+message QuarantineRestoreRequest {
+  string id = 1;
+}
+
+message QuarantineRestoreResponse {
+  string   id      = 1;
+  bool     ok      = 2;
+  string   message = 3;
+}
+
+message QuarantineDeleteRequest {
+  string id = 1;
+}
+
+message QuarantineDeleteResponse {
+  string   id      = 1;
+  bool     ok      = 2;
+  string   message = 3;
+}
